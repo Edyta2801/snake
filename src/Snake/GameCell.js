@@ -8,14 +8,25 @@ const style = {
 }
 
 
-const GameCell = (props) => (
-    <div
-        style={{
-            ...style,
-            flexBasis: 100 / props.numberOfCells + '%'
-        }}
-    >
-        {props.cell}
-    </div>
-)
+const GameCell = (props) => {
+    const color = (
+        props.cell === 0 ?
+            'black'
+            :
+            props.cell === 'F' ?
+                'green'
+                :
+                'white'
+    )
+    return (
+        <div
+            style={{
+                ...style,
+                flexBasis: 100 / props.numberOfCells + '%',
+                backgroundColor: color
+            }}
+        >
+        </div>
+    )
+}
 export default GameCell 
