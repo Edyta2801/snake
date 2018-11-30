@@ -58,10 +58,10 @@ class Snake extends React.Component {
   }
 
   componentDidMount() {
-    this.placeNewMeal()
-
     this.checkIfIsInTheMatch()
 
+    this.placeNewMeal()
+    
     this.intervalId = setInterval(
       this.gameTick,
       this.state.gameTickTime
