@@ -37,11 +37,11 @@ class Snake extends React.Component {
   }
 
   checkIfIsInTheMatch = () => {
-    if(window.location.hash){
+    if (window.location.hash) {
       this.matchId = window.location.hash.replace('#', '')
       this.currentPlayerIndex = 1
       this.direction = 'left'
-    }else{
+    } else {
       this.startNewMatch()
     }
   }
@@ -168,13 +168,13 @@ class Snake extends React.Component {
       )
     )
 
-    if(newMeals.length === this.state.meals.length){
+    if (newMeals.length === this.state.meals.length) {
       this.moveSnake(newSnakeHeadPosition)
-    }else{
+    } else {
       this.moveSnakeOnMeal(newSnakeHeadPosition)
-      this.setState({
-        meals: newMeals
-      })
+      this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}/meals`).set(
+        newMeals
+      )
       this.placeNewMeal()
     }
   }
@@ -191,9 +191,9 @@ class Snake extends React.Component {
         snake
     ))
 
-    this.setState({
-      snakes: newSnakes
-    })
+    this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}/snakes`).set(
+      newSnakes
+    )
   }
 
   moveSnake = (newSnakeHeadPosition) => {
@@ -208,9 +208,9 @@ class Snake extends React.Component {
         snake
     ))
 
-    this.setState({
-      snakes: newSnakes
-    })
+    this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}/snakes`).set(
+      newSnakes
+    )
   }
 
   endGame = () => {
