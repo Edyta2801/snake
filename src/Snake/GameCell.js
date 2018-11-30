@@ -10,7 +10,10 @@ const style = {
 
 const GameCell = (props) => (
     <div
-        style={style}
+        style={{
+            ...style,
+            flexBasis: 100 / props.numberOfCells + '%'
+        }}
     >
         {props.cell}
     </div>
