@@ -99,11 +99,11 @@ class Snake extends React.Component {
   }
 
   placeNewMeal = () => {
-    this.setState({
-      meals: this.state.meals.concat(
+    this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}/meals`).set(
+      this.state.meals.concat(
         this.generateNewMealPosition()
       )
-    })
+    )
   }
 
   generateNewMealPosition = () => {
@@ -271,6 +271,5 @@ Snake.defaultProps = {
   boardDimension: 11,
   startGameTickTime: 500
 }
-
 
 export default Snake
