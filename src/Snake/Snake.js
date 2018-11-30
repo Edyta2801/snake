@@ -1,7 +1,21 @@
 import React from 'react'
 
 class Snake extends React.Component {
-  render(){
+  state={
+      gameBoard:Array(this.props.boardDimension)
+      .fill(
+          Array(this.props.boardDimension)
+          .fill(1)
+      )
+  }
+  
+  
+  
+  
+  
+  
+  
+    render(){
     return(
       <div>
         Snake
@@ -9,4 +23,19 @@ class Snake extends React.Component {
     )
   }
 }
+
+Snake.defaultProps={
+    //@TODO it should be checked if bigger than eg. 5
+    boardDimension:10
+}
+
+
+
+
+
+
+
+
+
+
 export default Snake
