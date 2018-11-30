@@ -1,6 +1,6 @@
 
 import React from 'react'
-import GameBoard from './GameBoard';
+import GameBoard from './GameBoard'
 
 class Snake extends React.Component {
   constructor(props) {
@@ -43,10 +43,20 @@ class Snake extends React.Component {
       this.gameTick,
       this.state.gameTickTime
     )
+
+    window.addEventListener(
+      'keydown',
+      this.onArrowKeyDown
+    )
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId)
+
+    window.removeEventListener(
+      'keydown',
+      this.onArrowKeyDown
+    )
   }
 
   gameTick = () => {
@@ -118,6 +128,10 @@ class Snake extends React.Component {
 
   endGame = (snakeIndex) => {
     alert(`SNAKE ${snakeIndex} LOST!`)
+  }
+
+  onArrowKeyDown = event => {
+    console.log('ARROW')
   }
 
   composeGameBoard = () => {
