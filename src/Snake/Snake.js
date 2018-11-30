@@ -99,6 +99,27 @@ class Snake extends React.Component {
     })
   }
 
+  moveSnake = (snakeIndex, newSnakeHeadPosition) => {
+    const snake = this.state.snakes[snakeIndex]
+    const snakeWithoutTail = snake.slice(0, -1)
+    const snakeWithNewHead = [newSnakeHeadPosition].concat(snakeWithoutTail)
+
+    const newSnakes = this.state.snakes.map((snake, i) => (
+      snakeIndex === i ?
+        snakeWithNewHead
+        :
+        snake
+    ))
+
+    this.setState({
+      snakes: newSnakes
+    })
+  }
+
+  endGame = (snakeIndex) => {
+    alert(`SNAKE ${snakeIndex} LOST!`)
+  }
+
   composeGameBoard = () => {
     const gameBoardCopy = JSON.parse(JSON.stringify(this.state.gameBoard))
 
