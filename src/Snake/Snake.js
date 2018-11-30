@@ -45,10 +45,15 @@ class Snake extends React.Component {
   }
 
   startNewMatch = () => {
-    
+    const newRef = this.props.firebaseDatabase.ref('snake-multi').push()
+
+    window.location.hash = newRef.key
+    this.matchId = newRef.key
   }
 
   componentDidMount() {
+    this.checkIfIsInTheMatch()
+
     this.intervalId = setInterval(
       this.gameTick,
       this.state.gameTickTime

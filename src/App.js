@@ -1,7 +1,7 @@
 import React from 'react'
 import Snake from './Snake'
 
-import { database } from './firebaseConfig'
+import { database } from './FirebaseConfig'
 
 const App = (props) => (
   <div>
