@@ -4,6 +4,8 @@ import GameRow from './GameRow'
 const style = {
     width: '100%',
     maxWidth: '700px',
+    height:'100vw',
+    maxHeight:'700px',
     margin: '0 auto',
     backgroundColor: 'red'
 }
