@@ -3,89 +3,130 @@ import React from 'react'
 import GameBoard from './GameBoard';
 
 class Snake extends React.Component {
-  constructor(props) {
-    super()
+    constructor(props) {
+        super()
 
-    const halfBoardDimension = Math.ceil(props.boardDimension / 2) - 1
-    
-    this.intervalId = null
-    this.state = {
-      gameBoard: (
-        Array(props.boardDimension)
-          .fill(
-            Array(props.boardDimension)
-              .fill(1)
-          )
-      ),
-      snakes: [
-        [
-          { x: halfBoardDimension + 2, y: halfBoardDimension },
-          { x: halfBoardDimension + 1, y: halfBoardDimension }
-        ],
-        [
-          { x: halfBoardDimension - 2, y: halfBoardDimension },
-          { x: halfBoardDimension - 1, y: halfBoardDimension }
-        ]
-      ],
-      directions: [
-        'right',
-        'left'
-      ],
-      meals: [],
-      currentPlayerIndex: 0,
-      gameTickTime: props.startGameTickTime
+        const halfBoardDimension = Math.ceil(props.boardDimension / 2) - 1
+
+        this.intervalId = null
+        this.state = {
+            gameBoard: (
+                Array(props.boardDimension)
+                    .fill(
+                        Array(props.boardDimension)
+                            .fill(1)
+                    )
+            ),
+            snakes: [
+                [
+                    { x: halfBoardDimension + 2, y: halfBoardDimension },
+                    { x: halfBoardDimension + 1, y: halfBoardDimension }
+                ],
+                [
+                    { x: halfBoardDimension - 2, y: halfBoardDimension },
+                    { x: halfBoardDimension - 1, y: halfBoardDimension }
+                ]
+            ],
+            directions: [
+                'right',
+                'left'
+            ],
+            meals: [],
+            currentPlayerIndex: 0,
+            gameTickTime: props.startGameTickTime
+        }
     }
-  }
 
-  componentDidMount(){
-    this.intervalId = setInterval(
-      this.gameTick,
-      this.state.gameTickTime
-    )
-  }
+    componentDidMount() {
+        this.intervalId = setInterval(
+            this.gameTick,
+            this.state.gameTickTime
+        )
+    }
 
-  componentWillUnmount(){
-    clearInterval(this.intervalId)
-  }
+    componentWillUnmount() {
+        clearInterval(this.intervalId)
+    }
 
-  gameTick = () => {
-    console.log('tick')
-  }
+    gameTick = () => {
+        console.log('tick')
+        this.checkIfMovesAreAvailable()
+    }
 
-  composeGameBoard = () => {
-    const gameBoardCopy = JSON.parse(JSON.stringify(this.state.gameBoard))
+    checkIfMovesAreAvailable = () => {
+        this.state.snakes.forEach((snakePositions, i) => {
+            const snakeHeadPosition = snakePositions[0]
+            const direction = this.state.directions[i]
+            let newSnakePosition = null
 
-    this.state.snakes
-      .forEach(snake => (
-        snake.forEach(bodyCellPosition => (
-          gameBoardCopy[bodyCellPosition.y][bodyCellPosition.x] = 0
+            switch (direction) {
+                case 'left':
+                    newSnakePosition = {
+                        x: snakeHeadPosition.x - 1,
+                        y: snakeHeadPosition.y
+                    }
+                case 'right':
+                    newSnakePosition = {
+                        x: snakeHeadPosition.x + 1,
+                        y: snakeHeadPosition.y
+                    }
+
+
+                case 'top':
+                    newSnakePosition = {
+                        x: snakeHeadPosition.x,
+                        y: snakeHeadPosition.y - 1
+                    }
+
+
+                case 'bottom':
+                    newSnakePosition = {
+                        x: snakeHeadPosition.x,
+                        y: snakeHeadPosition.y + 1
+                    }
+                    break
+                default
+
+
+}
+
+        })
+    }
+
+    composeGameBoard = () => {
+        const gameBoardCopy = JSON.parse(JSON.stringify(this.state.gameBoard))
+
+        this.state.snakes
+            .forEach(snake => (
+                snake.forEach(bodyCellPosition => (
+                    gameBoardCopy[bodyCellPosition.y][bodyCellPosition.x] = 0
+                ))
+            ))
+
+        this.state.meals.forEach(mealPosition => (
+            gameBoardCopy[mealPosition.y][mealPosition.x] = 'F'
         ))
-      ))
 
-    this.state.meals.forEach(mealPosition => (
-      gameBoardCopy[mealPosition.y][mealPosition.x] = 'F'
-    ))
+        return gameBoardCopy
+    }
 
-    return gameBoardCopy
-  }
+    render() {
+        const gameBoard = this.composeGameBoard()
 
-  render() {
-    const gameBoard = this.composeGameBoard()
-
-    return (
-      <div>
-        <GameBoard
-          gameBoard={gameBoard}
-        />
-      </div>
-    )
-  }
+        return (
+            <div>
+                <GameBoard
+                    gameBoard={gameBoard}
+                />
+            </div>
+        )
+    }
 }
 
 Snake.defaultProps = {
-  // @TODO it should be checked if bigger than eg. 5
-  boardDimension: 11,
-  startGameTickTime: 1000
+    // @TODO it should be checked if bigger than eg. 5
+    boardDimension: 11,
+    startGameTickTime: 1000
 }
 
 export default Snake
