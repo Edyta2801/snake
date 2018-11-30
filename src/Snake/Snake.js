@@ -11,6 +11,7 @@ class Snake extends React.Component {
     this.currentGameBoard = null
     this.direction = 'right'
     this.currentPlayerIndex = 0
+    this.matchId = null
 
     this.state = {
       gameBoard: (
@@ -33,6 +34,18 @@ class Snake extends React.Component {
       meals: [],
       gameTickTime: props.startGameTickTime
     }
+  }
+
+  checkIfIsInTheMatch = () => {
+    if(window.location.hash){
+      this.matchId = window.location.hash
+    }else{
+      this.startNewMatch()
+    }
+  }
+
+  startNewMatch = () => {
+    
   }
 
   componentDidMount() {
