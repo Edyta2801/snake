@@ -58,6 +58,8 @@ class Snake extends React.Component {
   }
 
   componentDidMount() {
+    this.placeNewMeal()
+
     this.checkIfIsInTheMatch()
 
     this.intervalId = setInterval(
@@ -70,7 +72,14 @@ class Snake extends React.Component {
       this.onArrowKeyDown
     )
 
-    this.placeNewMeal()
+    this.startListeningDatabaseChanges()
+  }
+
+  startListeningDatabaseChanges = () => {
+    this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}`).on(
+      'value',
+      snapshot => this.setState(snapshot.val())
+    )
   }
 
   componentWillUnmount() {
@@ -80,6 +89,8 @@ class Snake extends React.Component {
       'keydown',
       this.onArrowKeyDown
     )
+
+    this.props.firebaseDatabase.ref(`snake-multi/${this.matchId}`).off()
   }
 
   gameTick = () => {
