@@ -38,7 +38,7 @@ class Snake extends React.Component {
 
   checkIfIsInTheMatch = () => {
     if(window.location.hash){
-      this.matchId = window.location.hash
+      this.matchId = window.location.hash.replace('#', '')
       this.currentPlayerIndex = 1
       this.direction = 'left'
     }else{
@@ -271,5 +271,6 @@ Snake.defaultProps = {
   boardDimension: 11,
   startGameTickTime: 500
 }
+
 
 export default Snake
