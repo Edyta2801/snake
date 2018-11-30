@@ -140,6 +140,7 @@ class Snake extends React.Component {
       this.setState({
         meals: newMeals
       })
+      this.placeNewMeal()
     }
   }
 
@@ -179,6 +180,7 @@ class Snake extends React.Component {
 
   endGame = () => {
     alert(`LOST!`)
+    clearInterval(this.intervalId)
   }
 
   onArrowKeyDown = event => {
@@ -232,7 +234,7 @@ class Snake extends React.Component {
 Snake.defaultProps = {
   // @TODO it should be checked if bigger than eg. 5
   boardDimension: 11,
-  startGameTickTime: 1000
+  startGameTickTime: 500
 }
 
 export default Snake
